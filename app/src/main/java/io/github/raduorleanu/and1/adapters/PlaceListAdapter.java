@@ -12,12 +12,12 @@ import java.util.List;
 import io.github.raduorleanu.and1.R;
 import io.github.raduorleanu.and1.models.Place;
 
-public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.WordViewHolder> {
+public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
 
-    class WordViewHolder extends RecyclerView.ViewHolder {
+    class PlaceViewHolder extends RecyclerView.ViewHolder {
         private final TextView placeItemView;
 
-        private WordViewHolder(View itemView) {
+        private PlaceViewHolder(View itemView) {
             super(itemView);
             placeItemView = itemView.findViewById(R.id.textView);
         }
@@ -29,13 +29,13 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Word
     public PlaceListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
     @Override
-    public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
-        return new WordViewHolder(itemView);
+        return new PlaceViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(WordViewHolder holder, int position) {
+    public void onBindViewHolder(PlaceViewHolder holder, int position) {
         if (placeList != null) {
             Place current = placeList.get(position);
             holder.placeItemView.setText(current.getName());
