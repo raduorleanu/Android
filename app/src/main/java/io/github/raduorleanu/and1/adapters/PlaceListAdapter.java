@@ -15,11 +15,11 @@ import io.github.raduorleanu.and1.models.Place;
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
-        private final TextView placeItemView;
+        private final TextView placeName;
 
         private PlaceViewHolder(View itemView) {
             super(itemView);
-            placeItemView = itemView.findViewById(R.id.textView);
+            placeName = itemView.findViewById(R.id.place_name);
         }
     }
 
@@ -38,10 +38,10 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
     public void onBindViewHolder(PlaceViewHolder holder, int position) {
         if (placeList != null) {
             Place current = placeList.get(position);
-            holder.placeItemView.setText(current.getName());
+            holder.placeName.setText(current.getName());
         } else {
             // Covers the case of data not being ready yet.
-            holder.placeItemView.setText("No Word");
+            holder.placeName.setText("No Word");
         }
     }
 
