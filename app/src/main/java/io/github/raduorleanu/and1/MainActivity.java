@@ -3,6 +3,7 @@ package io.github.raduorleanu.and1;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,12 +16,13 @@ import java.util.List;
 
 import io.github.raduorleanu.and1.activities.NewPlaceActivity;
 import io.github.raduorleanu.and1.adapters.PlaceListAdapter;
+import io.github.raduorleanu.and1.database_mock.DatabaseMock;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.view_models.PlaceViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private PlaceViewModel placeViewModel;
+    private static PlaceViewModel placeViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
@@ -44,7 +46,33 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setPlaceList(places);
             }
         });
+
+
+        // add mock data but async
+        //tryGetData();
     }
+
+    private static void tryGetData() {
+
+        DatabaseMock dbm = new DatabaseMock();
+        List<Place> places = dbm.getData();
+        for (Place p: places) {
+            placeViewModel.insert(p);
+        }
+//        new AsyncTask<Void, Void, Void>() {
+//
+//            @Override
+//            protected Void doInBackground(Void... voids) {
+//                DatabaseMock dbm = new DatabaseMock();
+//                List<Place> places = dbm.getData();
+//                for (Place p: places) {
+//                    placeViewModel.insert(p);
+//                }
+//                return null;
+//            }
+//        };
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -65,5 +93,9 @@ public class MainActivity extends AppCompatActivity {
     public void addNewPlace(View view) {
         Intent intent = new Intent(MainActivity.this, NewPlaceActivity.class);
         startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+
+
     }
+
+
 }

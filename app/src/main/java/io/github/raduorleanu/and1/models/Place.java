@@ -2,14 +2,22 @@ package io.github.raduorleanu.and1.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Model for a specific place. Should map to the 4sq API
  */
 @Entity(tableName = "places")
 public class Place {
+
+    @Ignore
+    private List<User> alreadyGoing;
+
 
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -29,6 +37,7 @@ public class Place {
         address = builder.address;
         name = builder.name;
         pictureUrl = builder.pictureUrl;
+        alreadyGoing = new ArrayList<>();
     }
 
     public Place(){}
@@ -101,6 +110,14 @@ public class Place {
 
     public void setPictureUrl(@NonNull String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public void addUser(@NonNull User user) {
+        alreadyGoing.add(user);
+    }
+
+    public List<User> getAlreadyGoing() {
+        return alreadyGoing;
     }
 
 

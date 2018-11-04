@@ -2,12 +2,14 @@ package io.github.raduorleanu.and1.repo;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
 
 import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
 import io.github.raduorleanu.and1.database.PlacesDatabase;
+import io.github.raduorleanu.and1.database_mock.DatabaseMock;
 import io.github.raduorleanu.and1.models.Place;
 
 public class PlaceRepository {
@@ -18,10 +20,20 @@ public class PlaceRepository {
     public PlaceRepository(Application application) {
         PlacesDatabase db = PlacesDatabase.getDatabase(application);
         placeDao = db.placeDao();
-        places = placeDao.getAllPlaces();
+
+    }
+
+    public MutableLiveData<List<Place>> getAPIPlaces() {
+
+        MutableLiveData<List<Place>> mda = new MutableLiveData<>();
+        DatabaseMock dbm = new DatabaseMock();
+        List<Place> pl = dbm.getData();
+        mda.setValue(pl);
+        return mda;
     }
 
     public LiveData<List<Place>> getAllPlaces() {
+        places = placeDao.getAllPlaces();
         return places;
     }
 

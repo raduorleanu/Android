@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 
@@ -15,16 +16,21 @@ import io.github.raduorleanu.and1.models.Place;
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
 
     class PlaceViewHolder extends RecyclerView.ViewHolder {
+
         private final TextView placeName;
+        private final TextView placeId;
+        private final Button alreadyGoingCounter;
 
         private PlaceViewHolder(View itemView) {
             super(itemView);
             placeName = itemView.findViewById(R.id.place_name);
+            placeId = itemView.findViewById(R.id.place_id);
+            alreadyGoingCounter = itemView.findViewById(R.id.see_who_button);
         }
     }
 
     private final LayoutInflater mInflater;
-    private List<Place> placeList; // Cached copy of words
+    private List<Place> placeList; // Cached copy of places
 
     public PlaceListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
@@ -39,14 +45,19 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         if (placeList != null) {
             Place current = placeList.get(position);
             holder.placeName.setText(current.getName());
+            holder.placeId.setText("ID: " + String.valueOf(current.getId()));
+
+            // toDo: add show list of users on click
+
+            holder.alreadyGoingCounter.setText(String.valueOf(current.getAlreadyGoing().size()));
         } else {
             // Covers the case of data not being ready yet.
             holder.placeName.setText("No Word");
         }
     }
 
-    public void setPlaceList(List<Place> words){
-        placeList = words;
+    public void setPlaceList(List<Place> places){
+        placeList = places;
         notifyDataSetChanged();
     }
 

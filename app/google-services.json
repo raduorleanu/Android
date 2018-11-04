@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "769877251735",
+    "firebase_url": "https://andproject-b7c74.firebaseio.com",
+    "project_id": "andproject-b7c74",
+    "storage_bucket": "andproject-b7c74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769877251735:android:35be5770dd4ece16",
+        "android_client_info": {
+          "package_name": "io.github.raduorleanu.and1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769877251735-n8t360bsiruondn9449jb0f964i05m8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz1SwZN257od4-ALn5TcVafkMNDvYikRE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

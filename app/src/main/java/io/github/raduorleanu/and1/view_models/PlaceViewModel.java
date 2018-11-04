@@ -18,7 +18,8 @@ public class PlaceViewModel extends AndroidViewModel {
     public PlaceViewModel(@NonNull Application application) {
         super(application);
         repository = new PlaceRepository(application);
-        places = repository.getAllPlaces();
+        // places = repository.getAllPlaces();
+        places = repository.getAPIPlaces();
     }
 
     public LiveData<List<Place>> getPlaces() {
