@@ -1,6 +1,8 @@
 package io.github.raduorleanu.and1.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String username;
     private int id;
