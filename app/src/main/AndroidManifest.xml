@@ -16,7 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NewPlaceActivity"></activity>
+        <activity android:name=".activities.NewPlaceActivity" />
+        <activity
+            android:name=".AlreadyGoing"
+            android:label="@string/title_activity_already_going"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.github.raduorleanu.and1.MainActivity" />
+        </activity>
+        <activity android:name=".adapters.PlaceListAdapter$SeeAll" />
     </application>
 
 </manifest>
