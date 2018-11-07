@@ -108,3 +108,4 @@ proguard/
 # OTher
 /captures
 .externalNativeBuild
+/app/google-services.json

@@ -35,6 +35,10 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 
+    //
+    // firebase sdk
+    implementation 'com.google.firebase:firebase-core:16.0.5'
+
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
     implementation 'com.android.support:design:28.0.0'
@@ -44,4 +48,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-database:16.0.4'
 }
+<<<<<<< HEAD
+=======
+
+// firebase sdk plugin
+>>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
 apply plugin: 'com.google.gms.google-services'

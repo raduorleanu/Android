@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AND1</string>
+    <string name="add_me_button">Add me</string>
+    <string name="already_going">already going:</string>
+    <string name="title_activity_already_going">Already Going</string>
+    <string name="add_friend_button">Add friend</string>
 </resources>
