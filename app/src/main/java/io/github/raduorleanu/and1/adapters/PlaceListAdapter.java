@@ -24,6 +24,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
     }
 
     private final LayoutInflater mInflater;
+
     private List<Place> placeList; // Cached copy of words
 
     public PlaceListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
