@@ -48,9 +48,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-database:16.0.4'
 }
-<<<<<<< HEAD
-=======
-
-// firebase sdk plugin
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
+//<<<<<<< HEAD
+//<<<<<<< HEAD
+//=======
+//
+//// firebase sdk plugin
+//>>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
+//=======
+//
+//// firebase sdk plugin
+//>>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
 apply plugin: 'com.google.gms.google-services'

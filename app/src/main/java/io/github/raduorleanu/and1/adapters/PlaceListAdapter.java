@@ -28,8 +28,12 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
     private final LayoutInflater mInflater;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     private List<Place> placeList; // Cached copy of words
+=======
+    private List<Place> placeList; // Cached copy of places
+>>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
 =======
     private List<Place> placeList; // Cached copy of places
 >>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
