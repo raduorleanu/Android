@@ -7,4 +7,9 @@
     <string name="title_activity_already_going">Already Going</string>
     <string name="add_friend_button">Add friend</string>
 
+    <string name="sign_in_btn">Sign in</string>
+    <string name="passHint">Password</string>
+    <string name="uNameHint">Username</string>
+    <string name="sign_up_btn">Sign up</string>
+
 </resources>

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +27,9 @@
                 android:value="io.github.raduorleanu.and1.MainActivity" />
         </activity>
         <activity android:name=".adapters.PlaceListAdapter$SeeAll" />
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".activities.SignUpActivity"></activity>
+
     </application>
 
 </manifest>
