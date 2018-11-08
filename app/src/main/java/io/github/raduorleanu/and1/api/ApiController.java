@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import io.github.raduorleanu.and1.models.Place;
 
@@ -21,20 +24,20 @@ public class ApiController {
 
     }
 
-    public static Call<Place> getPlaces() {
-        /**
-         * Creating the REST client
-         * Setting the Base URL
-         * Setting the Base converter
-         *
-         */
-        return new Retrofit
-                .Builder()
-                .baseUrl(APIService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(APIService.class)
-                .getPlace(APIService.FOURSQUARE_VERSION, APIService.FOURSQUARE_CLIENT_ID, APIService.FOURSQUARE_CLIENT_SECRET);
+//    public static Call<JsonObject> getPlaces() {
+//        /**
+//         * Creating the REST client
+//         * Setting the Base URL
+//         * Setting the Base Converter
+//         *
+//         */
+//        return new Retrofit
+//                .Builder()
+//                .baseUrl(APIService.BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//                .create(APIService.class)
+//                .getPlace(APIService.DEFAULT_LOCATION, APIService.FOURSQUARE_CLIENT_ID, APIService.FOURSQUARE_CLIENT_SECRET);
 
         // Setting the service
         // create method takes our API interface class
@@ -52,7 +55,7 @@ public class ApiController {
 //            }
 //        });
 
-    }
+//    }
 //    Call<List<Place>> places = APIServiceAPI.getPlaces(APIService.FOURSQUARE_VERSION, APIService.FOURSQUARE_CLIENT_ID, APIService.FOURSQUARE_CLIENT_SECRET).enqueue(new Callback<List<Place>>() {
 //        @Override
 //        public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {

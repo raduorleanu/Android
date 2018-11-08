@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +15,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.ForkJoinPool;
 
 import io.github.raduorleanu.and1.activities.NewPlaceActivity;
 import io.github.raduorleanu.and1.adapters.PlaceListAdapter;
@@ -59,48 +65,30 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setPlaceList(places);
             }
         });
+        try {
+            fetchPlaces();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        fetchPlaces = findViewById(R.id.getPlaces);
-        myPlaceTextView = findViewById(R.id.myPlace);
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fetchPlaces.isPressed()) {
-                    try {
-                        fetchPlaces();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        fetchPlaces.setOnClickListener(onClickListener);
+
+//        View.OnClickListener onClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (fetchPlaces.isPressed()) {
+//                    try {
+//                        fetchPlaces();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        };
+//        fetchPlaces.setOnClickListener(onClickListener);
 
 
         // add mock data but async
         //tryGetData();
-        // Retrofit
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(APIService.AUTHORIZATION_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-
-        // create method takes our API interface class
-//        APIService api = retrofit.create(APIService.class);
-//        Call<ArrayList<Place>> places = api.getPlaces();
-
-        // takes a callback interface
-//        places.enqueue(new Callback() {
-//            @Override
-//            public void onResponse(Call call, Response response) {
-//                ArrayList<Place> places = (ArrayList<Place>) response.body();
-//            }
-//
-//            @Override
-//            public void onFailure(Call call, Throwable t) {
-//                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
 
@@ -108,19 +96,43 @@ public class MainActivity extends AppCompatActivity {
 //        Response<Place> response = ApiController.getPlaces().execute();
 //        Place place = response.body();
 //        placeViewModel.insert(place);
-        ApiController.getPlaces().enqueue(new Callback<Place>() {
+//        ApiController.getPlaces().enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+//                Log.e("TAG", "response 33: " + new Gson().toJson(response.body()));
+//                System.out.println("hello");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<JsonObject> call, Throwable t) {
+//                Log.e("TAG", "failed to fetch the places");
+//            }
+//        });
+
+        // Retrofit
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(APIService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+
+
+        APIService client =  retrofit.create(APIService.class);
+        Call call = client.getPlacesAsJson(APIService.DEFAULT_LOCATION, APIService.FOURSQUARE_CLIENT_ID, APIService.FOURSQUARE_CLIENT_SECRET);
+
+        // takes a callback interface
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<Place> call, Response<Place> response) {
-                response.body().getAsJsonObject();
-//                placeViewModel.add();
+            public void onResponse(Call call, Response response) {
+                Log.e("TAG", "response 33: " + response.body());
+                System.out.println("hello");
             }
 
             @Override
-            public void onFailure(Call<Place> call, Throwable t) {
-//                nothing yet
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private static void tryGetData() {

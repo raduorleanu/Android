@@ -25,28 +25,33 @@ public interface APIService {
 
     String DEFAULT_LOCATION = "HORSENS";
 
-//    String AUTHORIZATION_URL = "https://api.foursquare.com/v2/venues/explore?near=" + DEFAULT_LOCATION + "&client_id=" + FOURSQUARE_CLIENT_ID + "&client_secret=" + FOURSQUARE_CLIENT_SECRET;
+//    Userless Auth
+    String USERLESS_AUTH = "https://api.foursquare.com/v2/venues/search?ll=40.7,-74&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=YYYYMMDD";
+    String CONCAT_USERLESS = BASE_URL + FOURSQUARE_VERSION + "venues/search?ll=40.7,-74&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=YYYYMMDD";
+
+
+    String AUTHORIZATION_URL = "https://api.foursquare.com/v2/venues/explore?near=" + DEFAULT_LOCATION + "&client_id=" + FOURSQUARE_CLIENT_ID + "&client_secret=" + FOURSQUARE_CLIENT_SECRET;
 
 //    @GET("response/groups/items")
 //    Call<ArrayList<Place>> getPlaces();
 
-
-    @GET("/v2/venues/search")
-    Call<JsonObject> getPlace(@Query("v") String version,
+    // BASE URL +
+    @GET("/v2/venues/explore")
+    Call<JsonObject> getPlacesAsJson(@Query("near") String location,
                               @Query("client_id") String clientID,
                               @Query("client_secret") String clientSecret);
 
-    @GET("/v2/venues/search")
-    Call<JsonObject> getPlacesByLocation(@Query("v") String version,
-                                    @Query("client_id") String clientID,
-                                    @Query("client_secret") String clientSecret,
-                                    @Query("query") String placeType,
-                                    @Query("ll") String latLng);
-
-    @GET("/v2/venues/{venue_id}")
-    Call<JsonObject> getPlaceDetail(@Path("venue_id") String venueID,
-                               @Query("v") String version,
-                               @Query("client_id") String clientID,
-                               @Query("client_secret") String clientSecret);
+//    @GET("/v2/venues/search")
+//    Call<Place> getVenuesByLocation(@Query("v") String version,
+//                                    @Query("client_id") String clientID,
+//                                    @Query("client_secret") String clientSecret,
+//                                    @Query("query") String placeType,
+//                                    @Query("ll") String latLng);
+//
+//    @GET("/v2/venues/{venue_id}")
+//    Call<Place> getVenueDetail(@Path("venue_id") String venueID,
+//                               @Query("v") String version,
+//                               @Query("client_id") String clientID,
+//                               @Query("client_secret") String clientSecret);
 
 }
