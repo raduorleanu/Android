@@ -29,4 +29,8 @@ public class PlaceViewModel extends AndroidViewModel {
     public void insert(Place place) {
         repository.insert(place);
     }
+
+    public void add(Place place) {
+        repository.add(place);
+    }
 }

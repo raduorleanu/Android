@@ -54,7 +54,9 @@ public class PlaceRepository {
             mPlaceAsyncDao.insert(params[0]);
             return null;
         }
-
     }
 
+    public void add(Place place){
+        places.getValue().add(place);
+    }
 }
