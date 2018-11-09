@@ -19,9 +19,10 @@ public class Place {
     private List<User> alreadyGoing;
 
 
+    @NonNull
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private int id;
+    private String id;
 
     @ColumnInfo(name = "address")
     private String address;
@@ -43,17 +44,17 @@ public class Place {
     public Place(){}
 
     public static class PlaceBuilder {
-        private int id;
+        private String id;
         private String address;
         private String name;
         private String pictureUrl;
 
-        public PlaceBuilder(int id) {
+        public PlaceBuilder(String id) {
             // id is required
             this.id = id;
         }
 
-        public PlaceBuilder id(int val) {
+        public PlaceBuilder id(String val) {
             id = val;
             return this;
         }
@@ -77,11 +78,11 @@ public class Place {
         }
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
