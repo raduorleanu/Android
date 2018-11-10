@@ -83,6 +83,7 @@ public class FourSquareAsync extends AsyncTask<Void, Void, List<Place>> {
             }
 
         } catch (IOException e) {
+            Log.w("getPicUrl", e.getMessage());
             e.printStackTrace();
         }
         return "https://i.imgur.com/5gO7P9B.png";

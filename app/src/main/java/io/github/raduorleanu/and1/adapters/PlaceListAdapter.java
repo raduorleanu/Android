@@ -27,6 +27,7 @@ import io.github.raduorleanu.and1.AlreadyGoing;
 import io.github.raduorleanu.and1.R;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.models.User;
+import io.github.raduorleanu.and1.util.PlacesDatabaseProvider;
 
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
 
@@ -55,9 +56,6 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
             final Place current = placeList.get(index);
             holder.placeName.setText(current.getName());
             holder.placeId.setText("ID: " + String.valueOf(current.getId()));
-
-            Log.w("peeek", Uri.parse(current.getPictureUrl()).toString());
-            Log.w("peeek", current.getPictureUrl());
 
             new DownloadImageTask(holder.imageView).execute(current.getPictureUrl());
 
@@ -106,6 +104,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
     @SuppressLint("Registered")
     class AddMe extends AppCompatActivity implements View.OnClickListener {
 
+        // toDo: add me to the database
         private String userName;
         private int index;
 
@@ -116,9 +115,9 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
         @Override
         public void onClick(View view) {
-            // toDo: check if already going!
             Place place = placeList.get(index);
-            place.addUser(new User(userName, index));
+            //place.addUser(new User(userName, index));
+            PlacesDatabaseProvider.getPlacesDatabase().addUserToPlace(userName, place.getId());
             self.notifyItemChanged(index);
         }
     }
@@ -156,7 +155,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
+                Log.w("Error", e.getMessage());
                 e.printStackTrace();
             }
             return mIcon11;
