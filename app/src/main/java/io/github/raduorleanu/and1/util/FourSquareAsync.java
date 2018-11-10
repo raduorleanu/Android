@@ -29,8 +29,6 @@ public class FourSquareAsync extends AsyncTask<Void, Void, List<Place>> {
     @Override
     protected List<Place> doInBackground(Void... voids) {
 
-        Log.w("xxxxx", "\n " + Constants.API_URL + "\n");
-
         List<Place> places = new ArrayList<>();
 
         try {
@@ -42,7 +40,6 @@ public class FourSquareAsync extends AsyncTask<Void, Void, List<Place>> {
 
             try(Scanner scanner = new Scanner(response)) {
                 String responseBody = scanner.useDelimiter("\\A").next();
-                Log.w("zzzzz", "\n " + responseBody + "\n");
 
                 String p = "$.response.groups[0].items[*].venue.";
 
@@ -51,7 +48,9 @@ public class FourSquareAsync extends AsyncTask<Void, Void, List<Place>> {
 
                 for(int i = 0; i < names.size(); i++) {
                     places.add(new Place.PlaceBuilder(ids.get(i))
-                            .name(names.get(i)).build());
+                            .name(names.get(i))
+                            .pictureUrl(getPicUrl(ids.get(i)))
+                            .build());
                 }
             }
 
@@ -60,6 +59,33 @@ public class FourSquareAsync extends AsyncTask<Void, Void, List<Place>> {
         }
 
         return places;
+    }
+
+    // toDo: if enough time, make this async
+    private String getPicUrl(String id) {
+        try {
+            URL url = new URL("https://api.foursquare.com/v2/venues/" + id + "/photos" + Constants.credentials);
+            URLConnection urlConnection = url.openConnection();
+
+            InputStream response = urlConnection.getInputStream();
+
+            try(Scanner scanner = new Scanner(response)) {
+                String responseBody = scanner.useDelimiter("\\A").next();
+
+                String p = "$.response.photos.items[0].";
+
+                String prefix = JsonPath.read(responseBody, p + "prefix");
+                String suffix = JsonPath.read(responseBody, p + "suffix");
+                String width = String.valueOf(JsonPath.read(responseBody, p + "width"));
+                String height = String.valueOf(JsonPath.read(responseBody, p + "width"));
+
+                return prefix + height + "x" + width + suffix;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "https://i.imgur.com/5gO7P9B.png";
     }
 
     @Override

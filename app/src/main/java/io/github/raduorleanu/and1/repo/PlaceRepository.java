@@ -26,7 +26,6 @@ public class PlaceRepository {
         PlacesDatabase db = PlacesDatabase.getDatabase(application);
         placeDao = db.placeDao();
         apiResponse = new MutableLiveData<>();
-
     }
 
     public MutableLiveData<List<Place>> getAPIPlaces() {

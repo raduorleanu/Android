@@ -54,21 +54,21 @@ public class Place {
             this.id = id;
         }
 
-        public PlaceBuilder id(String val) {
+        public PlaceBuilder id(@NonNull String val) {
             id = val;
             return this;
         }
 
-        public PlaceBuilder address(String val) {
+        public PlaceBuilder address(@NonNull String val) {
             address = val;
             return this;
         }
 
-        public PlaceBuilder name(String val) {
+        public PlaceBuilder name(@NonNull String val) {
             name = val;
             return this;
         }
-        public PlaceBuilder pictureUrl(String val) {
+        public PlaceBuilder pictureUrl(@NonNull String val) {
             pictureUrl = val;
             return this;
         }
@@ -82,7 +82,7 @@ public class Place {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
