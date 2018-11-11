@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import io.github.raduorleanu.and1.activities.NewPlaceActivity;
 import io.github.raduorleanu.and1.activities.SignUpActivity;
 
 
@@ -48,12 +49,15 @@ public class LoginActivity extends AppCompatActivity {
                 String uName = username.getText().toString();
                 String cpass = password.getText().toString();
 
-
-                if(!uName.equals("") && !cpass.equals("")){
-//                    checkUsername(uName, cpass);
-                    signIn(uName, cpass) ;
+                if (isLoggedIn()){
+                    goToMain();
                 }else{
-                    toastMessage("You didn't fill in all the fields.");
+                    if (!uName.equals("") && !cpass.equals("")) {
+//                    checkUsername(uName, cpass);
+                        signIn(uName, cpass);
+                    } else {
+                        toastMessage("You didn't fill in all the fields.");
+                    }
                 }
             }
         });
@@ -90,8 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             toastMessage(user.getEmail() + " is signed in")       ;
                             clearFields();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            goToMain();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -115,5 +118,15 @@ public class LoginActivity extends AppCompatActivity {
     public void clearFields(){
         username.setText("");
         password.setText("");
+    }
+
+    private boolean isLoggedIn(){
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return (currentUser != null);
+    }
+
+    private void goToMain(){
+        Intent intent = new Intent(LoginActivity.this, NewPlaceActivity.class);
+        startActivity(intent);
     }
 }
