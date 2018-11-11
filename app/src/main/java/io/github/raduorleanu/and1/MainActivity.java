@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            Place place = new Place.PlaceBuilder(Integer.parseInt(data.getStringExtra("new_id")))
+            Place place = new Place.PlaceBuilder(data.getStringExtra("new_id"))
                     .name(data.getStringExtra("new_name")).build();
             placeViewModel.insert(place);
         } else {
