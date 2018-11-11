@@ -1,9 +1,9 @@
 package io.github.raduorleanu.and1;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button signIn, signUp;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.uNameView);
         password = (EditText) findViewById(R.id.passView);
         signIn = (Button) findViewById(R.id.signInBtn);
-        signUp= (Button) findViewById(R.id.signUpBtn);
+        signUp = (Button) findViewById(R.id.signUpBtn);
 
+        if (isLoggedIn()) goToMain();
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,17 +48,14 @@ public class LoginActivity extends AppCompatActivity {
                 String uName = username.getText().toString();
                 String cpass = password.getText().toString();
 
-                if (isLoggedIn()){
-                    goToMain();
-                }else{
-                    if (!uName.equals("") && !cpass.equals("")) {
+                if (!uName.equals("") && !cpass.equals("")) {
 //                    checkUsername(uName, cpass);
-                        signIn(uName, cpass);
-                    } else {
-                        toastMessage("You didn't fill in all the fields.");
-                    }
+                    signIn(uName, cpass);
+                } else {
+                    toastMessage("You didn't fill in all the fields.");
                 }
             }
+
         });
 
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void signIn(String email,String password){
+    public void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -92,13 +88,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            toastMessage(user.getEmail() + " is signed in")       ;
+                            toastMessage(user.getEmail() + " is signed in");
                             clearFields();
                             goToMain();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            toastMessage( "Authentication failed.");
+                            toastMessage("Authentication failed.");
                         }
 
 
@@ -107,26 +103,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //add a toast to show when successfully signed in
+
     /**
      * customizable toast
+     *
      * @param message
      */
-    private void toastMessage(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void clearFields(){
+    public void clearFields() {
         username.setText("");
         password.setText("");
     }
 
-    private boolean isLoggedIn(){
+    private boolean isLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         return (currentUser != null);
     }
 
-    private void goToMain(){
-        Intent intent = new Intent(LoginActivity.this, NewPlaceActivity.class);
+    private void goToMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
 }

@@ -111,3 +111,4 @@ proguard/
 /app/google-services.json
 app/google-services.json
 app/google-services.json
+app/src/main/java/io/github/raduorleanu/and1/data/Constants.java

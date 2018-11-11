@@ -34,14 +34,12 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
     private final Context context;
 
     private final LayoutInflater mInflater;
-<<<<<<< HEAD
 
     private List<Place> placeList; // Cached copy of words
 
-=======
-    private List<Place> placeList; // Cached copy of places
+
     private PlaceListAdapter self;
->>>>>>> catalin
+
 
     public PlaceListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);

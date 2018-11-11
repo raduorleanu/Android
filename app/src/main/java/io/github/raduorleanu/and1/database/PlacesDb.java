@@ -1,6 +1,7 @@
 package io.github.raduorleanu.and1.database;
 
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.NonNull;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,59 +13,34 @@ import com.google.firebase.database.core.RepoInfo;
 import java.util.List;
 
 import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
+import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
 import io.github.raduorleanu.and1.models.Place;
 
-public class PlacesDb  implements IPlaceDao{
-    private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
-    private DatabaseReference placesRef;
-    private boolean dbSet;
-
-    public PlacesDb(DatabaseReference myRef, FirebaseAuth mAuth) {
-        this.myRef = myRef;
-        this.mAuth = mAuth;
-    }
+public class PlacesDb  implements IDatabasePlaceAdapter {
 
     @Override
-    public void insert(Place... places) {
-        if (!dbSet) getDB();
-
-//        for (:
-//             ) {
-//
-//        }
+    public void addPlace(Place place) {
 
     }
 
     @Override
-    public void delete(Place... places) {
-        if (!dbSet) getDB();
+    public void removePlace(String placeId) {
 
     }
 
+    @NonNull
     @Override
-    public void update(Place... places) {
-        if (!dbSet) getDB();
-
-    }
-
-    @Override
-    public LiveData<List<Place>> getAllPlaces() {
+    public List<String> alreadyGoing(String placeId) {
         return null;
     }
 
     @Override
-    public void deleteAll() {
-        if (!dbSet) getDB();
-        
+    public void addUserToPlace(String userName, String placeId) {
+
     }
 
-    public void getDB(){
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        placesRef = database.getReference("Places");
-        dbSet = true;
-    }
+    @Override
+    public void removeUserFromPlace(String username, String placeId) {
 
+    }
 }
