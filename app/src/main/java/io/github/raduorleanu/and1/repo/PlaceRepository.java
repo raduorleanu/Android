@@ -1,40 +1,64 @@
 package io.github.raduorleanu.and1.repo;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
 import io.github.raduorleanu.and1.database.PlacesDatabase;
-import io.github.raduorleanu.and1.database_mock.DatabaseMock;
 import io.github.raduorleanu.and1.models.Place;
+import io.github.raduorleanu.and1.util.AlreadyGoingDbAsync;
+import io.github.raduorleanu.and1.util.FourSquareAsync;
 
 public class PlaceRepository {
 
     private IPlaceDao placeDao;
-    private LiveData<List<Place>> places;
+//    private LiveData<List<Place>> places;
+
+    private MutableLiveData<List<Place>> apiResponse;
+    private FourSquareAsync fourSquareAsync;
 
     public PlaceRepository(Application application) {
         PlacesDatabase db = PlacesDatabase.getDatabase(application);
         placeDao = db.placeDao();
-
+        apiResponse = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<Place>> getAPIPlaces() {
-
-        MutableLiveData<List<Place>> mda = new MutableLiveData<>();
-        DatabaseMock dbm = new DatabaseMock();
-        List<Place> pl = dbm.getData();
-        mda.setValue(pl);
-        return mda;
+        if(fourSquareAsync == null) fourSquareAsync = new FourSquareAsync(this);
+        fourSquareAsync.execute();
+        return apiResponse;
     }
 
-    public LiveData<List<Place>> getAllPlaces() {
-        places = placeDao.getAllPlaces();
-        return places;
+    // callback for FourSquareAsync
+    public void setApiResponse(List<Place> places) {
+        apiResponse.setValue(places);
+
+        // add already going
+        // toDo: change from mock to real db
+        AlreadyGoingDbAsync goingDbAsync = new AlreadyGoingDbAsync(this);
+        //noinspection unchecked
+        goingDbAsync.execute(places);
+    }
+
+    // callback for AlreadyGoingDbAsync
+    public void addAlreadyGoingUsersFromDb(HashMap<String, List<String>> placeIdListOfUsers) {
+        // iterate key value pair of dic
+        for (Map.Entry<String, List<String>> keyValuePair: placeIdListOfUsers.entrySet()) {
+            // iterate places of mutable list
+            for(Place place : Objects.requireNonNull(apiResponse.getValue())) {
+                if(place.getId().equals(keyValuePair.getKey())) {
+                    place.addUsers(keyValuePair.getValue());
+                }
+            }
+        }
+        //apiResponse.notifyAll();
     }
 
     public void insert(Place place) {

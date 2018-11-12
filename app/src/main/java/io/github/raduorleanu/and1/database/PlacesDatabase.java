@@ -55,7 +55,7 @@ public abstract class PlacesDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            Place p = new Place.PlaceBuilder(1)
+            Place p = new Place.PlaceBuilder("1")
                     .address("Address1")
                     .pictureUrl("url1")
                     .name("Location1").build();
