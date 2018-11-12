@@ -40,7 +40,6 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
     private PlaceListAdapter self;
 
-
     public PlaceListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;

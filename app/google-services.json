@@ -8,6 +8,7 @@
   "client": [
     {
       "client_info": {
+
         "mobilesdk_app_id": "1:1021238941362:android:35be5770dd4ece16",
         "android_client_info": {
           "package_name": "io.github.raduorleanu.and1"
