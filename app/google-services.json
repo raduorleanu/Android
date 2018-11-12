@@ -1,43 +1,21 @@
 {
   "project_info": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "project_number": "1021238941362",
     "firebase_url": "https://upnabout-e44f5.firebaseio.com",
     "project_id": "upnabout-e44f5",
     "storage_bucket": "upnabout-e44f5.appspot.com"
-=======
-=======
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
-    "project_number": "769877251735",
-    "firebase_url": "https://andproject-b7c74.firebaseio.com",
-    "project_id": "andproject-b7c74",
-    "storage_bucket": "andproject-b7c74.appspot.com"
-<<<<<<< HEAD
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
-=======
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
   },
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         "mobilesdk_app_id": "1:1021238941362:android:35be5770dd4ece16",
-=======
-        "mobilesdk_app_id": "1:769877251735:android:35be5770dd4ece16",
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
-=======
-        "mobilesdk_app_id": "1:769877251735:android:35be5770dd4ece16",
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
         "android_client_info": {
           "package_name": "io.github.raduorleanu.and1"
         }
       },
       "oauth_client": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
           "client_id": "1021238941362-nlgsnerql3otv4pt46mqfv1ideutli58.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -47,26 +25,12 @@
         },
         {
           "client_id": "1021238941362-2p2srb42bu8k0k3kum9trkqng2lg61u1.apps.googleusercontent.com",
-=======
-          "client_id": "769877251735-n8t360bsiruondn9449jb0f964i05m8m.apps.googleusercontent.com",
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
-=======
-          "client_id": "769877251735-n8t360bsiruondn9449jb0f964i05m8m.apps.googleusercontent.com",
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
           "client_type": 3
         }
       ],
       "api_key": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
           "current_key": "AIzaSyAkMdCDrIYD9aDg6pA3AWHzPdYdzavLtXg"
-=======
-          "current_key": "AIzaSyCz1SwZN257od4-ALn5TcVafkMNDvYikRE"
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
-=======
-          "current_key": "AIzaSyCz1SwZN257od4-ALn5TcVafkMNDvYikRE"
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
         }
       ],
       "services": {
@@ -74,8 +38,6 @@
           "status": 1
         },
         "appinvite_service": {
-<<<<<<< HEAD
-<<<<<<< HEAD
           "status": 2,
           "other_platform_oauth_client": [
             {
@@ -83,14 +45,6 @@
               "client_type": 3
             }
           ]
-=======
-          "status": 1,
-          "other_platform_oauth_client": []
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
-=======
-          "status": 1,
-          "other_platform_oauth_client": []
->>>>>>> 9737b9efe46247eb01468134569cc958ac14b7dc
         },
         "ads_service": {
           "status": 2
