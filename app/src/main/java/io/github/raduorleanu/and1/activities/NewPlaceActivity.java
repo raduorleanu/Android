@@ -24,15 +24,24 @@ public class NewPlaceActivity extends AppCompatActivity implements IDatabaseResp
     private EditText idText;
     private EditText nameText;
     private IDatabasePlaceAdapter db;
+    private IDatabaseResponse self;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // reference to self
+        self = this;
+
         setContentView(R.layout.activity_new_place);
 
 
         db = new PlacesDb();
+
+
+        // here you call the already going method, and the callback is handled lower
+        db.alreadyGoing("someid", self);
 
         idText = findViewById(R.id.edit_place_id);
         nameText = findViewById(R.id.edit_place_name);
@@ -63,6 +72,6 @@ public class NewPlaceActivity extends AppCompatActivity implements IDatabaseResp
 
     @Override
     public void alreadyGoingCallback(List<User> places) {
-        // here you can update the gui
+        // here you can update the ui
     }
 }
