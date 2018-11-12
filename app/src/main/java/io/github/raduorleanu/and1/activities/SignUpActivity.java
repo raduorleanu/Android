@@ -69,18 +69,17 @@ public class SignUpActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // My butt hurts dow@da.dk;z
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAccount(emailEdit.getText().toString(), passEdit.getText().toString());
-                final FirebaseUser user = mAuth.getCurrentUser();
-                myRef.child(user.getUid()).child("Username").push().setValue(unameEdit.getText().toString());
-                toastMessage("adding: " + emailEdit.getText().toString());
+//                FirebaseUser user = mAuth.getCurrentUser();
             }
         });
     }
 
-    public void createAccount(String username, String password){
+    public void createAccount(final String username, String password){
         mAuth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -89,7 +88,10 @@ public class SignUpActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithUsername:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            toastMessage("Welcome " + user.getEmail());
+//                            toastMessage("Welcome " + user.getEmail());
+
+                            myRef.child(username).push().setValue(unameEdit.getText().toString());
+                            toastMessage("adding: " + emailEdit.getText().toString());
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.

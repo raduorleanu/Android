@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 String cpass = password.getText().toString();
 
                 if (isLoggedIn()) goToMain();
+
                 if (!uName.equals("") && !cpass.equals("")) {
 //                    checkUsername(uName, cpass);
                     signIn(uName, cpass);
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToMain() {
-        Intent intent = new Intent(LoginActivity.this, NewPlaceActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
