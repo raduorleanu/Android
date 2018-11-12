@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private EditText username, password;
-    private Button signIn, signUp;
+    private Button signIn, signUp, signOut;
 
 
     @Override
@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.passView);
         signIn = (Button) findViewById(R.id.signInBtn);
         signUp = (Button) findViewById(R.id.signUpBtn);
+        signOut = (Button) findViewById(R.id.signOutBtn);
 
         if (isLoggedIn()) goToMain();
 
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 String uName = username.getText().toString();
                 String cpass = password.getText().toString();
 
+                if (isLoggedIn()) goToMain();
                 if (!uName.equals("") && !cpass.equals("")) {
 //                    checkUsername(uName, cpass);
                     signIn(uName, cpass);
@@ -63,6 +65,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent toSignUp = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(toSignUp);
+            }
+        });
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+                toastMessage("Signed out");
             }
         });
     }
@@ -124,7 +134,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, NewPlaceActivity.class);
         startActivity(intent);
     }
+
+    private void logOut(){
+        mAuth.signOut();
+
+    }
+
+    public void define(){}
 }
+

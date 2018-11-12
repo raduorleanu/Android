@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import io.github.raduorleanu.and1.R;
+import io.github.raduorleanu.and1.database.PlacesDb;
+import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
+import io.github.raduorleanu.and1.models.Place;
 
 public class NewPlaceActivity extends AppCompatActivity {
 
@@ -16,12 +19,16 @@ public class NewPlaceActivity extends AppCompatActivity {
 
     private EditText idText;
     private EditText nameText;
+    private IDatabasePlaceAdapter db;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_place);
+
+
+        db = new PlacesDb();
 
         idText = findViewById(R.id.edit_place_id);
         nameText = findViewById(R.id.edit_place_name);
@@ -31,17 +38,16 @@ public class NewPlaceActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(idText.getText())) {
+                if (TextUtils.isEmpty(idText.getText()) || TextUtils.isEmpty(nameText.getText())) {
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
+                    Place pl = new Place();
+                    pl.setId(idText.getText().toString());
+                    pl.setName(nameText.getText().toString());
+//                    Place.PlaceBuilder builder = new Place.PlaceBuilder(idText.getText().toString());
+                    db.addPlace(pl);
                     String id = idText.getText().toString();
                     replyIntent.putExtra("new_id", id);
-                    setResult(RESULT_OK, replyIntent);
-                }
-
-                if (TextUtils.isEmpty(nameText.getText())) {
-                    setResult(RESULT_CANCELED, replyIntent);
-                } else {
                     String name = nameText.getText().toString();
                     replyIntent.putExtra("new_name", name);
                     setResult(RESULT_OK, replyIntent);

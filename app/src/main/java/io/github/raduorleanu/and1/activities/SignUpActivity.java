@@ -32,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     //fields
-    private EditText  emailEdit, passEdit;
+    private EditText  emailEdit,unameEdit, passEdit;
     private Button signUpButton;
 
 
@@ -43,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         emailEdit = (EditText) findViewById(R.id.sign_up_email);
+        unameEdit = (EditText) findViewById(R.id.sign_up_username);
         passEdit = (EditText) findViewById(R.id.sign_up_password);
         signUpButton = (Button) findViewById(R.id.sign_up_button);
 
@@ -51,29 +52,29 @@ public class SignUpActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
-        toastMessage(myRef.toString());
-        myRef.push().setValue("sup");
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.d(TAG, "Value is: " + value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAccount(emailEdit.getText().toString(), passEdit.getText().toString());
+                final FirebaseUser user = mAuth.getCurrentUser();
+                myRef.child(user.getUid()).child("Username").push().setValue(unameEdit.getText().toString());
                 toastMessage("adding: " + emailEdit.getText().toString());
             }
         });
