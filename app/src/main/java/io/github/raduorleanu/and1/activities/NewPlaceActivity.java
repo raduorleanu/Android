@@ -8,12 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
 import io.github.raduorleanu.and1.R;
 import io.github.raduorleanu.and1.database.PlacesDb;
 import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
+import io.github.raduorleanu.and1.interfaces.IDatabaseResponse;
 import io.github.raduorleanu.and1.models.Place;
+import io.github.raduorleanu.and1.models.User;
 
-public class NewPlaceActivity extends AppCompatActivity {
+public class NewPlaceActivity extends AppCompatActivity implements IDatabaseResponse {
 
     //public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
@@ -55,5 +59,10 @@ public class NewPlaceActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void alreadyGoingCallback(List<User> places) {
+        // here you can update the gui
     }
 }

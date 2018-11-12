@@ -27,11 +27,11 @@ public interface IDatabasePlaceAdapter {
      * Returns a List with user names of people who are going to a place. You should check if the
      * place exists in the db first (meaning someone is actually going) and return an EMPTY LIST
      * if the place does not exist.
-     * @param placeId the place you query for users going
-     * @return a list with user names (for now)
+     * @param callback the method to be called on success
+     * @param placeId the id of the place
      */
-    @NonNull
-    List alreadyGoing(String placeId);
+
+    void alreadyGoing(String placeId, IDatabaseResponse callbackInterface);
 
     /**
      * Adds a user name to the array of users going to the place with that id. Check first if the

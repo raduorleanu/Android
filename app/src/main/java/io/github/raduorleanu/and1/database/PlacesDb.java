@@ -20,7 +20,9 @@ import java.util.List;
 
 import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
 import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
+import io.github.raduorleanu.and1.interfaces.IDatabaseResponse;
 import io.github.raduorleanu.and1.models.Place;
+import io.github.raduorleanu.and1.models.User;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -66,28 +68,29 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
      * @param placeId the place you query for users going
      * @return a list with user names (for now)
      */
-    @NonNull
+
     @Override
-    public List<String> alreadyGoing(final String placeId) {
-//        final List going = new ArrayList();
-//        DatabaseReference ref = database.getReference(placeId);
-//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snap) {
-//                for (Object person: snap.getChildren()) {
-//                    going.add(person);
-//                }
-//
-//                System.out.println("num of people going = " + snap.getChildrenCount());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
+    public void alreadyGoing(final String placeId, final IDatabaseResponse callbackInterface) {
+        final List<User> going = new ArrayList<>();
+        DatabaseReference ref = database.getReference(placeId);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snap) {
+                for (Object person: snap.getChildren()) {
+                    going.add((User) person);
+                }
+
+                System.out.println("num of people going = " + snap.getChildrenCount());
+                callbackInterface.alreadyGoingCallback(going);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
 //        DatabaseReference temp = placesRef.child(placeId);
-        return getList(placeId, "alreadyGoing");
+        //return getList(placeId, "alreadyGoing");
     }
 
     /**
