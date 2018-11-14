@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
+import io.github.raduorleanu.and1.interfaces.ICallbackResponse;
 import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
 import io.github.raduorleanu.and1.models.Place;
+import io.github.raduorleanu.and1.models.User;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -29,10 +31,12 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference placesRef;
+    ICallbackResponse response;
 
-    public PlacesDb() {
+    public PlacesDb(ICallbackResponse callbackResponse) {
         database = FirebaseDatabase.getInstance();
         placesRef = database.getReference("Places");
+        response = callbackResponse;
     }
 
     /**
@@ -69,22 +73,22 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
     @NonNull
     @Override
     public List<String> alreadyGoing(final String placeId) {
-//        final List going = new ArrayList();
-//        DatabaseReference ref = database.getReference(placeId);
-//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snap) {
-//                for (Object person: snap.getChildren()) {
-//                    going.add(person);
-//                }
-//
-//                System.out.println("num of people going = " + snap.getChildrenCount());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
+        final List<String> going = new ArrayList<>();
+        DatabaseReference ref = database.getReference(placeId);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snap) {
+                for (Object person: snap.child("alreadyGoing").getChildren()) {
+                    //going.add((User)person);
+                }
+
+                System.out.println("num of people going = " + snap.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
 //        DatabaseReference temp = placesRef.child(placeId);
         return getList(placeId, "alreadyGoing");

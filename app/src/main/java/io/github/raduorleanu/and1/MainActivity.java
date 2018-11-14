@@ -2,9 +2,7 @@ package io.github.raduorleanu.and1;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,8 +13,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import io.github.raduorleanu.and1.activities.NewPlaceActivity;
 import io.github.raduorleanu.and1.adapters.PlaceListAdapter;
+import io.github.raduorleanu.and1.database.PlacesDb;
 import io.github.raduorleanu.and1.database_mock.DatabaseMock;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.view_models.PlaceViewModel;
@@ -25,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static PlaceViewModel placeViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    public PlaceListAdapter placeListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final PlaceListAdapter adapter = new PlaceListAdapter(this);
+        placeListAdapter = adapter;
+
+//        PlacesDb d = new PlacesDb(placeListAdapter);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -91,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void addNewPlace(View view) {
-        Intent intent = new Intent(MainActivity.this, NewPlaceActivity.class);
-        startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-
-
-    }
+//    public void addNewPlace(View view) {
+//        Intent intent = new Intent(MainActivity.this, NewPlaceActivity.class);
+//        startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+//
+//
+//    }
 
 
 }

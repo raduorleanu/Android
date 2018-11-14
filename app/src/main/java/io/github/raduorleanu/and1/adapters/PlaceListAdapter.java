@@ -25,11 +25,13 @@ import java.util.List;
 
 import io.github.raduorleanu.and1.AlreadyGoing;
 import io.github.raduorleanu.and1.R;
+import io.github.raduorleanu.and1.interfaces.ICallbackResponse;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.models.User;
 import io.github.raduorleanu.and1.util.PlacesDatabaseProvider;
 
-public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
+public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder>
+implements ICallbackResponse {
 
     private final Context context;
 
@@ -86,6 +88,25 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         if (placeList != null)
             return placeList.size();
         else return 0;
+    }
+
+    public void updateSpecificPlace(String placeId, ArrayList<String> userNameList) {
+        int placeIndex = getPlaceIndex(placeId);
+        Place place = placeList.get(placeIndex);
+        for(String s: userNameList) {
+            place.addUser(new User(s, 1));
+        }
+        placeList.set(placeIndex, place);
+        this.notifyItemChanged(placeIndex);
+    }
+
+    private int getPlaceIndex(String placeId) {
+        for(int i = 0; i < placeList.size(); i++) {
+            if(placeList.get(i).getId().equals(placeId)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     class SeeAll extends AppCompatActivity implements View.OnClickListener {
