@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.raduorleanu.and1.database_mock.PlacesDbMock;
+import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.repo.PlaceRepository;
 
@@ -12,7 +13,7 @@ import io.github.raduorleanu.and1.repo.PlaceRepository;
 public class AlreadyGoingDbAsync extends AsyncTask<List<Place>, Void, HashMap<String, List<String>>>{
 
     private PlaceRepository placeRepository;
-    private PlacesDbMock mock;
+    private IDatabasePlaceAdapter mock;
 
     public AlreadyGoingDbAsync(PlaceRepository repository) {
         placeRepository = repository;
@@ -22,7 +23,7 @@ public class AlreadyGoingDbAsync extends AsyncTask<List<Place>, Void, HashMap<St
     @Override
     protected HashMap<String, List<String>> doInBackground(List<Place>... lists) {
         List<Place> places = lists[0];
-        mock.setMock(places);
+        ((PlacesDbMock)mock).setMock(places);
 
         HashMap<String, List<String>> map = new HashMap<>();
 

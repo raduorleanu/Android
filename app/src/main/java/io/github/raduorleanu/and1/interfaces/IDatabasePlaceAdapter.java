@@ -31,7 +31,7 @@ public interface IDatabasePlaceAdapter {
      * @return a list with user names (for now)
      */
     @NonNull
-    List alreadyGoing(String placeId);
+    List<String> alreadyGoing(String placeId);
 
     /**
      * Adds a user name to the array of users going to the place with that id. Check first if the
