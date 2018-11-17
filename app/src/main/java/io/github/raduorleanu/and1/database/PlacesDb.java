@@ -1,42 +1,30 @@
 package io.github.raduorleanu.and1.database;
 
-import android.arch.lifecycle.LiveData;
-import android.provider.ContactsContract;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.DatabaseConfig;
-import com.google.firebase.database.core.RepoInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
 import io.github.raduorleanu.and1.interfaces.ICallbackResponse;
 import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
 import io.github.raduorleanu.and1.models.Place;
-import io.github.raduorleanu.and1.models.User;
-
-import static android.widget.Toast.LENGTH_LONG;
 
 public class PlacesDb  implements IDatabasePlaceAdapter {
 
-    private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference placesRef;
-    ICallbackResponse response;
 
-    public PlacesDb(ICallbackResponse callbackResponse) {
+
+    public PlacesDb() {
         database = FirebaseDatabase.getInstance();
-        placesRef = database.getReference("Places");
-        response = callbackResponse;
+        placesRef = database.getReference("places");
     }
 
     /**
@@ -74,24 +62,18 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
     @Override
     public List<String> alreadyGoing(final String placeId) {
         final List<String> going = new ArrayList<>();
-        DatabaseReference ref = database.getReference(placeId);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        placesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snap) {
-                for (Object person: snap.child("alreadyGoing").getChildren()) {
-                    //going.add((User)person);
-                }
-
-                System.out.println("num of people going = " + snap.getChildrenCount());
+                going.addAll((List<String>) (snap.child(placeId).child("alreadyGoing").getValue()));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-//        DatabaseReference temp = placesRef.child(placeId);
-        return getList(placeId, "alreadyGoing");
+//        response.updateSpecificPlace(placeId, (ArrayList<String>) going);
+        return going ;
     }
 
     /**
@@ -103,7 +85,8 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
      */
     @Override
     public void addUserToPlace(String userName, String placeId) {
-        placesRef.child(placeId).child("alreadyGoing").push().setValue(userName);
+        placesRef.child(placeId).child("alreadyGoing").setValue(alreadyGoing(placeId).add(userName));
+//        placesRef.child(placeId).child("alreadyGoing").push().setValue(userName);
     }
 
     /**
@@ -132,8 +115,6 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
                 for (Object person: snap.child(position).getChildren()) {
                     myList.add(person.toString());
                 }
-
-//                System.out.println("num of people going = " + snap.getChildrenCount());
             }
 
             @Override
@@ -145,4 +126,20 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
     }
 
 
+//    public void populateAG(){
+//
+//        addUserToPlace("231231", "Jamale");
+//
+//    }
+//
+//    public class popThread implements Runnable {
+//
+//        @Override
+//        public void run() {
+//
+//            new PlacesDb().populateAG();
+//        }
+//
+//    }
 }
+

@@ -5,14 +5,14 @@ import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
 
 public class PlacesDatabaseProvider {
 
-    public static IDatabasePlaceAdapter placesDatabase;
+    public static IDatabasePlaceAdapter placesDb;
 
     public static IDatabasePlaceAdapter getPlacesDatabase() {
-        if(placesDatabase == null) {
-            placesDatabase = new PlacesDbMock();
-            return placesDatabase;
+        if(placesDb == null) {
+            placesDb = new PlacesDbMock();
+            return placesDb;
         }
-        return placesDatabase;
+        return placesDb;
     }
 
 }
