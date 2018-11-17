@@ -13,22 +13,22 @@ import io.github.raduorleanu.and1.repo.PlaceRepository;
 public class AlreadyGoingDbAsync extends AsyncTask<List<Place>, Void, HashMap<String, List<String>>>{
 
     private PlaceRepository placeRepository;
-    private IDatabasePlaceAdapter mock;
+    private IDatabasePlaceAdapter database;
 
     public AlreadyGoingDbAsync(PlaceRepository repository) {
         placeRepository = repository;
-        mock = PlacesDatabaseProvider.getPlacesDatabase();
+        //database = PlacesDatabaseProvider.getPlacesDatabase();
     }
 
     @Override
     protected HashMap<String, List<String>> doInBackground(List<Place>... lists) {
         List<Place> places = lists[0];
-        ((PlacesDbMock)mock).setMock(places);
+        //((PlacesDbMock) database).setMock(places);
 
         HashMap<String, List<String>> map = new HashMap<>();
 
         for(Place p: places) {
-            map.put(p.getId(), mock.alreadyGoing(p.getId()));
+            map.put(p.getId(), database.alreadyGoing(p.getId()));
         }
 
         return map;

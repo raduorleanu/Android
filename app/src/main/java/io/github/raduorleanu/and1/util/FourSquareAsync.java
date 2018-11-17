@@ -31,32 +31,36 @@ public class FourSquareAsync extends AsyncTask<Void, Void, List<Place>> {
 
         List<Place> places = new ArrayList<>();
 
-        try {
-            URL url = new URL(Constants.API_URL);
+//        try {
+//            URL url = new URL(Constants.API_URL);
+//
+//            URLConnection urlConnection = url.openConnection();
+//
+//            InputStream response = urlConnection.getInputStream();
+//
+//            try(Scanner scanner = new Scanner(response)) {
+//                String responseBody = scanner.useDelimiter("\\A").next();
+//
+//                String p = "$.response.groups[0].items[*].venue.";
+//
+//                List<String> names = JsonPath.read(responseBody, p + "name");
+//                List<String> ids = JsonPath.read(responseBody, p + "id");
+//
+//                for(int i = 0; i < names.size(); i++) {
+//                    places.add(new Place.PlaceBuilder(ids.get(i))
+//                            .name(names.get(i))
+//                            .pictureUrl(getPicUrl(ids.get(i)))
+//                            .build());
+//                }
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-            URLConnection urlConnection = url.openConnection();
-
-            InputStream response = urlConnection.getInputStream();
-
-            try(Scanner scanner = new Scanner(response)) {
-                String responseBody = scanner.useDelimiter("\\A").next();
-
-                String p = "$.response.groups[0].items[*].venue.";
-
-                List<String> names = JsonPath.read(responseBody, p + "name");
-                List<String> ids = JsonPath.read(responseBody, p + "id");
-
-                for(int i = 0; i < names.size(); i++) {
-                    places.add(new Place.PlaceBuilder(ids.get(i))
-                            .name(names.get(i))
-                            .pictureUrl(getPicUrl(ids.get(i)))
-                            .build());
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        places.add(new Place.PlaceBuilder("p1").name("Coffee shop").pictureUrl("https://i.imgur.com/Ue45baa.jpg").build());
+        places.add(new Place.PlaceBuilder("p2").name("Street shop").pictureUrl("https://i.imgur.com/kI8B6ki.jpg?1").build());
+        places.add(new Place.PlaceBuilder("p3").name("Somewhere").pictureUrl("https://i.imgur.com/z2zMy0o.jpg").build());
 
         return places;
     }

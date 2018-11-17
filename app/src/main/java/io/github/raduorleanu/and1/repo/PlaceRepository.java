@@ -5,12 +5,15 @@ import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import io.github.raduorleanu.and1.adapters.PlaceListAdapter;
 import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
+import io.github.raduorleanu.and1.database.AlreadyGoingDb;
 import io.github.raduorleanu.and1.database.PlacesDatabase;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.util.AlreadyGoingDbAsync;
@@ -39,12 +42,22 @@ public class PlaceRepository {
     // callback for FourSquareAsync
     public void setApiResponse(List<Place> places) {
         apiResponse.setValue(places);
+        List<String> placeIds = new ArrayList<>();
+
+        for (Place p: places) {
+            placeIds.add(p.getId());
+        }
 
         // add already going
         // toDo: change from mock to real db
-        AlreadyGoingDbAsync goingDbAsync = new AlreadyGoingDbAsync(this);
-        //noinspection unchecked
-        goingDbAsync.execute(places);
+
+
+        AlreadyGoingDb db = new AlreadyGoingDb(this, placeIds);
+
+
+//        AlreadyGoingDbAsync goingDbAsync = new AlreadyGoingDbAsync(this);
+//        //noinspection unchecked
+//        goingDbAsync.execute(places);
     }
 
     // callback for AlreadyGoingDbAsync
@@ -52,9 +65,12 @@ public class PlaceRepository {
         // iterate key value pair of dic
         for (Map.Entry<String, List<String>> keyValuePair: placeIdListOfUsers.entrySet()) {
             // iterate places of mutable list
-            for(Place place : Objects.requireNonNull(apiResponse.getValue())) {
-                if(place.getId().equals(keyValuePair.getKey())) {
+            List<Place> places = Objects.requireNonNull(apiResponse.getValue());
+            for (int i = 0; i < places.size(); i++) {
+                Place place = places.get(i);
+                if (place.getId().equals(keyValuePair.getKey())) {
                     place.addUsers(keyValuePair.getValue());
+                    PlaceListAdapter.changeButtonNumber(i, keyValuePair.getValue().size());
                 }
             }
         }

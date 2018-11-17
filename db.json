@@ -1,0 +1,8 @@
+{
+	"places": 
+	[
+		{"placeId": "p1", "going": ["Mina", "Momo", "Sana"]},
+		{"placeId": "p2", "going": ["Mina", "Momo", "Catalin"]},
+		{"placeId": "p3", "going": ["Mina", "Momo", "Sana", "Shadow"]}
+	]
+}

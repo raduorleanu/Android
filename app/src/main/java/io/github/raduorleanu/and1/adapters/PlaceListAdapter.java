@@ -30,14 +30,15 @@ import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.models.User;
 import io.github.raduorleanu.and1.util.PlacesDatabaseProvider;
 
-public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder>
-implements ICallbackResponse {
+public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
 
     private final Context context;
 
     private final LayoutInflater mInflater;
 
     private List<Place> placeList; // Cached copy of words
+
+    private static List<PlaceViewHolder> cards;
 
 
     private PlaceListAdapter self;
@@ -46,6 +47,7 @@ implements ICallbackResponse {
         mInflater = LayoutInflater.from(context);
         this.context = context;
         self = this;
+        cards = new ArrayList<>();
     }
 
     @NonNull
@@ -70,10 +72,16 @@ implements ICallbackResponse {
 
             holder.addMeButton.setOnClickListener(new AddMe("MomoLina", index));
 
+            cards.add(holder);
+
         } else {
             // Covers the case of data not being ready yet.
             holder.placeName.setText("No Word");
         }
+    }
+
+    public static void changeButtonNumber(int index, int number) {
+        cards.get(index).alreadyGoingCounterButton.setText(String.valueOf(number));
     }
 
     public void setPlaceList(List<Place> places){
@@ -90,24 +98,24 @@ implements ICallbackResponse {
         else return 0;
     }
 
-    public void updateSpecificPlace(String placeId, ArrayList<String> userNameList) {
-        int placeIndex = getPlaceIndex(placeId);
-        Place place = placeList.get(placeIndex);
-        for(String s: userNameList) {
-            place.addUser(new User(s, 1));
-        }
-        placeList.set(placeIndex, place);
-        this.notifyItemChanged(placeIndex);
-    }
-
-    private int getPlaceIndex(String placeId) {
-        for(int i = 0; i < placeList.size(); i++) {
-            if(placeList.get(i).getId().equals(placeId)) {
-                return i;
-            }
-        }
-        return -1;
-    }
+//    public void updateSpecificPlace(String placeId, ArrayList<String> userNameList) {
+//        int placeIndex = getPlaceIndex(placeId);
+//        Place place = placeList.get(placeIndex);
+//        for(String s: userNameList) {
+//            place.addUser(new User(s, 1));
+//        }
+//        placeList.set(placeIndex, place);
+//        this.notifyItemChanged(placeIndex);
+//    }
+//
+//    private int getPlaceIndex(String placeId) {
+//        for(int i = 0; i < placeList.size(); i++) {
+//            if(placeList.get(i).getId().equals(placeId)) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
 
     class SeeAll extends AppCompatActivity implements View.OnClickListener {
 
@@ -140,8 +148,11 @@ implements ICallbackResponse {
         @Override
         public void onClick(View view) {
             Place place = placeList.get(index);
-            //place.addUser(new User(userName, index));
-            PlacesDatabaseProvider.getPlacesDatabase().addUserToPlace(userName, place.getId());
+
+
+            //toDo change to new way
+
+            //PlacesDatabaseProvider.getPlacesDatabase().addUserToPlace(userName, place.getId());
             self.notifyItemChanged(index);
         }
     }
