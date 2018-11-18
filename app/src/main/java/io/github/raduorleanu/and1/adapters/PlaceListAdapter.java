@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import io.github.raduorleanu.and1.AlreadyGoing;
 import io.github.raduorleanu.and1.R;
+import io.github.raduorleanu.and1.data.Constants;
 import io.github.raduorleanu.and1.database.AlreadyGoingDb;
 import io.github.raduorleanu.and1.interfaces.ICallbackResponse;
 import io.github.raduorleanu.and1.models.Place;
@@ -67,11 +69,11 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
             new DownloadImageTask(holder.imageView).execute(current.getPictureUrl());
 
-            holder.alreadyGoingCounterButton.setText(String.valueOf(current.getAlreadyGoing().size()));
+            //holder.alreadyGoingCounterButton.setText(String.valueOf(current.getAlreadyGoing().size()));
 
             holder.alreadyGoingCounterButton.setOnClickListener(new SeeAll(current.getAlreadyGoing()));
 
-            holder.addMeButton.setOnClickListener(new AddMe("MomoLina", index));
+            holder.addMeButton.setOnClickListener(new AddMe(Constants.name, index));
 
             cards.add(holder);
 
@@ -81,8 +83,16 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         }
     }
 
-    public static void changeButtonNumber(int index, int number) {
-        cards.get(index).alreadyGoingCounterButton.setText(String.valueOf(number));
+    public static void changeButtonNumber(String placeId, int number) {
+        //cards.get(index).alreadyGoingCounterButton.setText(String.valueOf(number));
+        Log.w("ChangeButt", placeId + " to " + number);
+        for(PlaceViewHolder cardView: cards) {
+            if(cardView.placeId.getText().equals("ID: " + placeId)) {
+                Log.w("ChangeButt-found", placeId + " to " + number);
+                cardView.alreadyGoingCounterButton.setText(String.valueOf(number));
+                break;
+            }
+        }
     }
 
     public void setPlaceList(List<Place> places){
@@ -153,7 +163,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
             //PlacesDatabaseProvider.getPlacesDatabase().addUserToPlace(userName, place.getId());
             AlreadyGoingDb.addUserToPlace(place.getId(), userName);
-            self.notifyItemChanged(index);
+            //self.notifyItemChanged(index);
         }
     }
 

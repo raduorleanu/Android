@@ -122,7 +122,7 @@ public class Place {
 //        Log.w("addUser", "Added " + user.getUsername() + ", array is now " + alreadyGoing);
         for(User u : alreadyGoing) {
             if(u.getUsername().equals(user.getUsername())) {
-                //Log.w("addUser", "Skipped " + u.getUsername());
+                Log.w("addUser", "Skipped " + u.getUsername());
                 //alreadyGoing.remove(u);
                 return;
             }

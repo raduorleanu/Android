@@ -63,6 +63,7 @@ public class PlaceRepository {
 
     // callback for AlreadyGoingDbAsync
     public void addAlreadyGoingUsersFromDb(HashMap<String, List<User>> placeIdListOfUsers) {
+        Log.w("addAlready", placeIdListOfUsers.toString());
         // iterate key value pair of dic
         for (Map.Entry<String, List<User>> keyValuePair: placeIdListOfUsers.entrySet()) {
             // iterate places of mutable list
@@ -71,7 +72,7 @@ public class PlaceRepository {
                 Place place = places.get(i);
                 if (place.getId().equals(keyValuePair.getKey())) {
                     place.addUsers(keyValuePair.getValue());
-                    PlaceListAdapter.changeButtonNumber(i, keyValuePair.getValue().size());
+                    PlaceListAdapter.changeButtonNumber(place.getId(), keyValuePair.getValue().size());
                 }
             }
         }
