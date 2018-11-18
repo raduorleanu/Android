@@ -25,6 +25,7 @@ import java.util.List;
 
 import io.github.raduorleanu.and1.AlreadyGoing;
 import io.github.raduorleanu.and1.R;
+import io.github.raduorleanu.and1.database.AlreadyGoingDb;
 import io.github.raduorleanu.and1.interfaces.ICallbackResponse;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.models.User;
@@ -117,6 +118,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 //        return -1;
 //    }
 
+    @SuppressLint("Registered")
     class SeeAll extends AppCompatActivity implements View.OnClickListener {
 
         private List<User> users;
@@ -149,10 +151,8 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         public void onClick(View view) {
             Place place = placeList.get(index);
 
-
-            //toDo change to new way
-
             //PlacesDatabaseProvider.getPlacesDatabase().addUserToPlace(userName, place.getId());
+            AlreadyGoingDb.addUserToPlace(place.getId(), userName);
             self.notifyItemChanged(index);
         }
     }

@@ -20,25 +20,25 @@ public class DatabaseEntry {
 
     private void addPlaces() {
         Place p1 = new Place.PlaceBuilder("1").name("VIA canteen").build();
-        p1.addUser(new User("Catalin", 1));
-        p1.addUser(new User("Momo", 2));
-        p1.addUser(new User("Soy", 3));
+        p1.addUser(new User("Catalin", "1"));
+        p1.addUser(new User("Momo", "1"));
+        p1.addUser(new User("Soy", "1"));
 
         Place p2 = new Place.PlaceBuilder("232").name("Rema1000").build();
-        p2.addUser(new User("Yusuf", 11));
-        p2.addUser(new User("Faizan", 22));
-        p2.addUser(new User("Tor", 33));
+        p2.addUser(new User("Yusuf", "1"));
+        p2.addUser(new User("Faizan", "1"));
+        p2.addUser(new User("Tor", "1"));
 
         Place p3 = new Place.PlaceBuilder("1232").name("Top kebab 100").build();
-        p3.addUser(new User("Yusuf", 5));
-        p3.addUser(new User("Martin", 6));
+        p3.addUser(new User("Yusuf", "1"));
+        p3.addUser(new User("Martin", "1"));
 
         Place p4 = new Place.PlaceBuilder("12332").name("Bilka kitchen area").build();
-        p4.addUser(new User("Yusuf", 31));
-        p4.addUser(new User("Martin", 13));
-        p4.addUser(new User("Martina", 113));
-        p4.addUser(new User("Ramona", 133));
-        p4.addUser(new User("Mina", 213));
+        p4.addUser(new User("Yusuf", "1"));
+        p4.addUser(new User("Martin", "1"));
+        p4.addUser(new User("Martina", "1"));
+        p4.addUser(new User("Ramona", "1"));
+        p4.addUser(new User("Mina", "1"));
 
         places.add(p1);
         places.add(p2);

@@ -18,7 +18,7 @@ public class PlacesDbMock implements IDatabasePlaceAdapter {
     public void setMock(List<Place> mock) {
         this.mock = mock;
         for(Place p: mock) {
-            p.addUsers(Arrays.asList("Mina", "Momo", "Sana"));
+            //p.addUsers(Arrays.asList("Mina", "Momo", "Sana"));
         }
     }
 
@@ -39,12 +39,12 @@ public class PlacesDbMock implements IDatabasePlaceAdapter {
 
     @NonNull
     @Override
-    public List<String> alreadyGoing(String placeId) {
+    public List<User> alreadyGoing(String placeId) {
         for(Place p: mock) {
             if(p.getId().equals(placeId)) {
-                List<String> res = new ArrayList<>();
+                List<User> res = new ArrayList<>();
                 for(User u: p.getAlreadyGoing()) {
-                    res.add(u.getUsername());
+                    res.add(new User(u.getUsername(), "1"));
                 }
                 return res;
             }
@@ -56,7 +56,7 @@ public class PlacesDbMock implements IDatabasePlaceAdapter {
     public void addUserToPlace(String userName, String placeId) {
         for(Place p: mock) {
             if(p.getId().equals(placeId)) {
-                p.addUser(new User(userName, 1));
+                p.addUser(new User(userName, "1"));
                 break;
             }
         }

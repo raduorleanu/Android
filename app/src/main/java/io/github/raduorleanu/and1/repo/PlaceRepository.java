@@ -16,6 +16,7 @@ import io.github.raduorleanu.and1.data_acess_objects.IPlaceDao;
 import io.github.raduorleanu.and1.database.AlreadyGoingDb;
 import io.github.raduorleanu.and1.database.PlacesDatabase;
 import io.github.raduorleanu.and1.models.Place;
+import io.github.raduorleanu.and1.models.User;
 import io.github.raduorleanu.and1.util.AlreadyGoingDbAsync;
 import io.github.raduorleanu.and1.util.FourSquareAsync;
 
@@ -61,9 +62,9 @@ public class PlaceRepository {
     }
 
     // callback for AlreadyGoingDbAsync
-    public void addAlreadyGoingUsersFromDb(HashMap<String, List<String>> placeIdListOfUsers) {
+    public void addAlreadyGoingUsersFromDb(HashMap<String, List<User>> placeIdListOfUsers) {
         // iterate key value pair of dic
-        for (Map.Entry<String, List<String>> keyValuePair: placeIdListOfUsers.entrySet()) {
+        for (Map.Entry<String, List<User>> keyValuePair: placeIdListOfUsers.entrySet()) {
             // iterate places of mutable list
             List<Place> places = Objects.requireNonNull(apiResponse.getValue());
             for (int i = 0; i < places.size(); i++) {

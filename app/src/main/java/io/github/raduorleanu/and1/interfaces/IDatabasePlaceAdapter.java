@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.github.raduorleanu.and1.models.Place;
+import io.github.raduorleanu.and1.models.User;
 
 public interface IDatabasePlaceAdapter {
 
@@ -31,7 +32,7 @@ public interface IDatabasePlaceAdapter {
      * @return a list with user names (for now)
      */
     @NonNull
-    List<String> alreadyGoing(String placeId);
+    List<User> alreadyGoing(String placeId);
 
     /**
      * Adds a user name to the array of users going to the place with that id. Check first if the

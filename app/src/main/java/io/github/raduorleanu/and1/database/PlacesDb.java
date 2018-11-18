@@ -72,8 +72,8 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
      */
     @NonNull
     @Override
-    public List<String> alreadyGoing(final String placeId) {
-        final List<String> going = new ArrayList<>();
+    public List<User> alreadyGoing(final String placeId) {
+        final List<User> going = new ArrayList<>();
         DatabaseReference ref = database.getReference(placeId);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -91,7 +91,7 @@ public class PlacesDb  implements IDatabasePlaceAdapter {
         });
 
 //        DatabaseReference temp = placesRef.child(placeId);
-        return getList(placeId, "alreadyGoing");
+        return new ArrayList<>();
     }
 
     /**

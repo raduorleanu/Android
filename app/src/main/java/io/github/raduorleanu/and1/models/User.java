@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private String username;
-    private int id;
+    private String id;
 
-    public User(String username, int id) {
+    public User(String username, String id) {
         this.username = username;
         this.id = id;
     }
@@ -16,11 +16,11 @@ public class User implements Serializable {
         return username;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     public String toString() {
-        return username;
+        return id + " " + username;
     }
 }

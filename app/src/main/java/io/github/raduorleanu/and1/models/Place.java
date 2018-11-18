@@ -122,20 +122,21 @@ public class Place {
 //        Log.w("addUser", "Added " + user.getUsername() + ", array is now " + alreadyGoing);
         for(User u : alreadyGoing) {
             if(u.getUsername().equals(user.getUsername())) {
-                Log.w("addUser", "Skipped " + u.getUsername());
+                //Log.w("addUser", "Skipped " + u.getUsername());
+                //alreadyGoing.remove(u);
                 return;
             }
         }
         alreadyGoing.add(user);
-        Log.w("addUser", "Added " + user.getUsername() + ", array is now " + alreadyGoing);
+        //Log.w("addUser", "Added " + user.getUsername() + ", array is now " + alreadyGoing);
     }
 
     //toDo: this is hardcoded to List<String> for testing only! change to List<User>
-    public void addUsers(List<String> users) {
-        for (String s: users) {
+    public void addUsers(List<User> users) {
+        for (User s: users) {
 //            alreadyGoing.add(new User(s, 9));
 //            Log.w("addUsers", "Added " + s + ", array is now " + alreadyGoing);
-            addUser(new User(s, 9));
+            addUser(s);
         }
     }
 
