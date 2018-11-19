@@ -2,6 +2,7 @@ package io.github.raduorleanu.and1.repo;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -27,16 +28,18 @@ public class PlaceRepository {
 
     private MutableLiveData<List<Place>> apiResponse;
     private FourSquareAsync fourSquareAsync;
+    private Context context;
 
     public PlaceRepository(Application application) {
+        context = application.getApplicationContext();
         PlacesDatabase db = PlacesDatabase.getDatabase(application);
         placeDao = db.placeDao();
         apiResponse = new MutableLiveData<>();
     }
 
-    public MutableLiveData<List<Place>> getAPIPlaces() {
-        if(fourSquareAsync == null) fourSquareAsync = new FourSquareAsync(this);
-        fourSquareAsync.execute();
+    public MutableLiveData<List<Place>> getAPIPlaces(String param) {
+        fourSquareAsync = new FourSquareAsync(this, context);
+        fourSquareAsync.execute(param);
         return apiResponse;
     }
 
@@ -49,16 +52,7 @@ public class PlaceRepository {
             placeIds.add(p.getId());
         }
 
-        // add already going
-        // toDo: change from mock to real db
-
-
         AlreadyGoingDb db = new AlreadyGoingDb(this, placeIds);
-
-
-//        AlreadyGoingDbAsync goingDbAsync = new AlreadyGoingDbAsync(this);
-//        //noinspection unchecked
-//        goingDbAsync.execute(places);
     }
 
     // callback for AlreadyGoingDbAsync

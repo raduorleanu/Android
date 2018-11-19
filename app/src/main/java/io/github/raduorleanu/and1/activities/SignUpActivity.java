@@ -90,9 +90,9 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            toastMessage("Welcome " + user.getEmail());
 
-                            myRef.child(username).push().setValue(unameEdit.getText().toString());
-                            toastMessage("adding: " + emailEdit.getText().toString());
-                            finish();
+//                            myRef.child(username).push().setValue(unameEdit.getText().toString());
+//                            toastMessage("adding: " + emailEdit.getText().toString());
+//                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithUsername:failure", task.getException());

@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import io.github.raduorleanu.and1.activities.SignUpActivity;
+import io.github.raduorleanu.and1.data.Constants;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -86,6 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        assert currentUser != null;
+        //Log.w("names ", currentUser.getDisplayName() + " - " + currentUser.getEmail());
+        Constants.name = currentUser.getEmail();
     }
 
 
@@ -130,6 +134,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            Constants.name = currentUser.getEmail();
+        }
         return (currentUser != null);
     }
 

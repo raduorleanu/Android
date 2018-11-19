@@ -14,5 +14,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="email">Email</string>
     <string name="username">Username</string>
+    <string name="button_search">Search</string>
 
 </resources>

@@ -4,16 +4,20 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import io.github.raduorleanu.and1.adapters.PlaceListAdapter;
+import io.github.raduorleanu.and1.data.Constants;
 import io.github.raduorleanu.and1.database.PlacesDb;
 import io.github.raduorleanu.and1.database_mock.DatabaseMock;
 import io.github.raduorleanu.and1.models.Place;
@@ -25,10 +29,27 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     public PlaceListAdapter placeListAdapter;
 
+    private TextView searchField;
+    private Button searchButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        searchButton = findViewById(R.id.search_button);
+        searchField = findViewById(R.id.search_term);
+        searchButton.setOnClickListener(new Search());
+
+        changeTitle();
+
+        setUpLiveData("Horsens coffee");
+
+        // add mock data but async
+        //tryGetData();
+    }
+
+    private void setUpLiveData(String queryParam) {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final PlaceListAdapter adapter = new PlaceListAdapter(this);
@@ -42,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         // associate viewmodel with the UI
         placeViewModel = ViewModelProviders.of(this).get(PlaceViewModel.class);
 
+        placeViewModel.queryApi(queryParam);
+
         // add observer for the live data
         placeViewModel.getPlaces().observe(this, new Observer<List<Place>>() {
             @Override
@@ -51,9 +74,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-        // add mock data but async
-        //tryGetData();
+    private class Search implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+            String q = searchField.getText().toString();
+            if(q.length() > 3) {
+                setUpLiveData(q);
+            }
+        }
+    }
+
+    private void changeTitle() {
+        setTitle(getTitle() + " - " + Constants.name);
     }
 
     private static void tryGetData() {
