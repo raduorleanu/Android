@@ -32,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     //fields
-    private EditText  emailEdit,unameEdit, passEdit;
+    private EditText  emailEdit, passEdit;
     private Button signUpButton;
 
 
@@ -43,7 +43,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         emailEdit = (EditText) findViewById(R.id.sign_up_email);
-        unameEdit = (EditText) findViewById(R.id.sign_up_username);
         passEdit = (EditText) findViewById(R.id.sign_up_password);
         signUpButton = (Button) findViewById(R.id.sign_up_button);
 
@@ -92,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 //                            myRef.child(username).push().setValue(unameEdit.getText().toString());
 //                            toastMessage("adding: " + emailEdit.getText().toString());
-//                            finish();
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithUsername:failure", task.getException());

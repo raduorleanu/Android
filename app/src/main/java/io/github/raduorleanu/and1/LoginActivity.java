@@ -35,24 +35,23 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.auth_view);
         mAuth = FirebaseAuth.getInstance();
 
-        username = (EditText) findViewById(R.id.uNameView);
-        password = (EditText) findViewById(R.id.passView);
-        signIn = (Button) findViewById(R.id.signInBtn);
-        signUp = (Button) findViewById(R.id.signUpBtn);
-        signOut = (Button) findViewById(R.id.signOutBtn);
+        username = findViewById(R.id.uNameView);
+        password = findViewById(R.id.passView);
+        signIn = findViewById(R.id.signInBtn);
+        signUp = findViewById(R.id.signUpBtn);
+        signOut = findViewById(R.id.signOutBtn);
 
         if (isLoggedIn()) goToMain();
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uName = username.getText().toString();
-                String cpass = password.getText().toString();
+                String uName = username.getText().toString().trim();
+                String cpass = password.getText().toString().trim();
 
                 if (isLoggedIn()) goToMain();
 
                 if (!uName.equals("") && !cpass.equals("")) {
-//                    checkUsername(uName, cpass);
                     signIn(uName, cpass);
                 } else {
                     toastMessage("You didn't fill in all the fields.");
@@ -78,18 +77,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-//    private void checkUsername(String uName, String cpass) {
-//        access.checkUsername(uName, cpass);
-//    }
-
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        assert currentUser != null;
-        //Log.w("names ", currentUser.getDisplayName() + " - " + currentUser.getEmail());
-        Constants.name = currentUser.getEmail();
+        if (currentUser != null && currentUser.getEmail() != null) {
+            Constants.name = currentUser.getEmail();
+        }
     }
 
 
@@ -99,14 +93,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
                             toastMessage(user.getEmail() + " is signed in");
                             clearFields();
                             goToMain();
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             toastMessage("Authentication failed.");
                         }
@@ -116,13 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    //add a toast to show when successfully signed in
-
-    /**
-     * customizable toast
-     *
-     * @param message
-     */
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -134,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
+        if (currentUser != null) {
             Constants.name = currentUser.getEmail();
         }
         return (currentUser != null);
@@ -145,11 +131,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void logOut(){
+    private void logOut() {
         mAuth.signOut();
 
     }
-
-    public void define(){}
 }
 
