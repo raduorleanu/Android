@@ -1,10 +1,8 @@
 package io.github.raduorleanu.and1.database_mock;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.github.raduorleanu.and1.interfaces.IDatabasePlaceAdapter;
@@ -17,9 +15,6 @@ public class PlacesDbMock implements IDatabasePlaceAdapter {
 
     public void setMock(List<Place> mock) {
         this.mock = mock;
-        for(Place p: mock) {
-            //p.addUsers(Arrays.asList("Mina", "Momo", "Sana"));
-        }
     }
 
     @Override

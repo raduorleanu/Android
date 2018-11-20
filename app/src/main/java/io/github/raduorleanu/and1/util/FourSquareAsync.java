@@ -9,14 +9,12 @@ import com.jayway.jsonpath.JsonPath;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import io.github.raduorleanu.and1.R;
 import io.github.raduorleanu.and1.data.Constants;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.repo.PlaceRepository;
@@ -30,8 +28,6 @@ public class FourSquareAsync extends AsyncTask<String, Void, List<Place>> {
         this.placeRepository = placeRepository;
         sharedPref = context.getSharedPreferences("com.and1.app.DATA", Context.MODE_PRIVATE);
     }
-
-    //&near=Horsens,Denmark&query=coffee
 
     @Override
     protected List<Place> doInBackground(String... strings) {
@@ -48,7 +44,15 @@ public class FourSquareAsync extends AsyncTask<String, Void, List<Place>> {
         List<Place> places = new ArrayList<>();
 
         try {
-            URL url = new URL(Constants.API_URL + "&near=" + location + "&query=" + query);
+            URL url;
+            if (location.contains("ll=")) {
+                url = new URL(Constants.API_URL + "&" + location);
+            } else {
+                url = new URL(Constants.API_URL + "&near=" + location + "&query=" + query);
+            }
+
+            Log.w("querying", url.toString());
+
 
             URLConnection urlConnection = url.openConnection();
 
@@ -73,11 +77,6 @@ public class FourSquareAsync extends AsyncTask<String, Void, List<Place>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        places.add(new Place.PlaceBuilder("p1").name("Coffee shop").pictureUrl("https://i.imgur.com/Ue45baa.jpg").build());
-//        places.add(new Place.PlaceBuilder("p2").name("Street shop").pictureUrl("https://i.imgur.com/kI8B6ki.jpg?1").build());
-//        places.add(new Place.PlaceBuilder("p3").name("Somewhere").pictureUrl("https://i.imgur.com/z2zMy0o.jpg").build());
-
         return places;
     }
 

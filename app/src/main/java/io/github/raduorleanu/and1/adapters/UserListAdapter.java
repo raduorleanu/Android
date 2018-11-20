@@ -3,11 +3,9 @@ package io.github.raduorleanu.and1.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,13 +53,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
 
         private final TextView userName;
         private final TextView userId;
-        private final Button addUser;
 
         private UserViewHolder(View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.user_name_);
             userId = itemView.findViewById(R.id.user_id_);
-            addUser = itemView.findViewById(R.id.add_me_button);
         }
     }
 

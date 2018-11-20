@@ -1,4 +1,4 @@
-package io.github.raduorleanu.and1;
+package io.github.raduorleanu.and1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import io.github.raduorleanu.and1.activities.SignUpActivity;
+import io.github.raduorleanu.and1.R;
 import io.github.raduorleanu.and1.data.Constants;
 
 

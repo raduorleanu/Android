@@ -23,11 +23,7 @@ public class PlaceViewModel extends AndroidViewModel {
     }
 
     public void queryApi(String queryParameter) {
-        MutableLiveData<List<Place>> res = repository.getAPIPlaces(queryParameter);
-        places = res;
-        //places.setValue(res.getValue());
-        //places.getValue().add(new Place.PlaceBuilder("123").name("asd").build());
-        //places = repository.getAPIPlaces(queryParameter);
+        places = repository.getAPIPlaces(queryParameter);
     }
 
     public LiveData<List<Place>> getPlaces() {

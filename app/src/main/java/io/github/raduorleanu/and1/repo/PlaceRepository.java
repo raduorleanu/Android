@@ -18,13 +18,11 @@ import io.github.raduorleanu.and1.database.AlreadyGoingDb;
 import io.github.raduorleanu.and1.database.PlacesDatabase;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.models.User;
-import io.github.raduorleanu.and1.util.AlreadyGoingDbAsync;
 import io.github.raduorleanu.and1.util.FourSquareAsync;
 
 public class PlaceRepository {
 
     private IPlaceDao placeDao;
-//    private LiveData<List<Place>> places;
 
     private MutableLiveData<List<Place>> apiResponse;
     private FourSquareAsync fourSquareAsync;
@@ -52,10 +50,9 @@ public class PlaceRepository {
             placeIds.add(p.getId());
         }
 
-        AlreadyGoingDb db = new AlreadyGoingDb(this, placeIds);
+        new AlreadyGoingDb(this, placeIds);
     }
 
-    // callback for AlreadyGoingDbAsync
     public void addAlreadyGoingUsersFromDb(HashMap<String, List<User>> placeIdListOfUsers) {
         Log.w("addAlready", placeIdListOfUsers.toString());
         // iterate key value pair of dic
@@ -70,7 +67,6 @@ public class PlaceRepository {
                 }
             }
         }
-        //apiResponse.notifyAll();
     }
 
     public void insert(Place place) {

@@ -9,7 +9,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Model for a specific place. Should map to the 4sq API
@@ -116,26 +115,17 @@ public class Place {
     }
 
     public void addUser(@NonNull User user) {
-//        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-//        Log.w("addUser", "Called by " + stackTraceElements[1].getMethodName());
-//        Log.w("addUser", "Called by " + stackTraceElements[0].getMethodName());
-//        Log.w("addUser", "Added " + user.getUsername() + ", array is now " + alreadyGoing);
         for(User u : alreadyGoing) {
             if(u.getUsername().equals(user.getUsername())) {
                 Log.w("addUser", "Skipped " + u.getUsername());
-                //alreadyGoing.remove(u);
                 return;
             }
         }
         alreadyGoing.add(user);
-        //Log.w("addUser", "Added " + user.getUsername() + ", array is now " + alreadyGoing);
     }
 
-    //toDo: this is hardcoded to List<String> for testing only! change to List<User>
     public void addUsers(List<User> users) {
         for (User s: users) {
-//            alreadyGoing.add(new User(s, 9));
-//            Log.w("addUsers", "Added " + s + ", array is now " + alreadyGoing);
             addUser(s);
         }
     }

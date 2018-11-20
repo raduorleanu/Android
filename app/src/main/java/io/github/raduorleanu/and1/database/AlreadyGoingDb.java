@@ -23,7 +23,6 @@ public class AlreadyGoingDb {
 
     private FirebaseDatabase db;
     private PlaceRepository repository;
-    private List<String> ids;
     private static DatabaseReference dbReference;
 
     // todo: this should be the username that the user logs in with and should be set at login!!
@@ -35,7 +34,6 @@ public class AlreadyGoingDb {
         db = FirebaseProvider.getDb();
         this.repository = repository;
         dbReference = db.getReference("places");
-        ids = placesIds;
         alreadyGoing = new ArrayList<>();
         placeIdListOfUsers = new HashMap<>();
 
@@ -43,8 +41,6 @@ public class AlreadyGoingDb {
     }
 
     private void addListeners() {
-
-        //dbReference.addListenerForSingleValueEvent(new SingleLoadEvent());
         dbReference.addValueEventListener(new ChangeEvent());
 
     }
@@ -59,11 +55,7 @@ public class AlreadyGoingDb {
 
     private class ChangeEvent implements ValueEventListener {
 
-
-
-        ChangeEvent() {
-
-        }
+        ChangeEvent() {}
 
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -79,9 +71,7 @@ public class AlreadyGoingDb {
                     List<User> users = new ArrayList<>();
 
                     for(DataSnapshot pl : places.getChildren()) {
-                        //Log.w("log here", Objects.requireNonNull(pl.getValue()).toString());
                         if(Objects.requireNonNull(pl.getValue()).toString().equals(name)) {
-                            //Log.w("adding", name + " to " + places.getKey());
                             alreadyGoing.add(places.getKey());
                         }
                         User u = new User(pl.getValue().toString(), pl.getKey());
@@ -90,52 +80,6 @@ public class AlreadyGoingDb {
                     }
                     placeIdListOfUsers.put(places.getKey(), users);
                     Log.w("added", users.toString() + " to " + places.getKey());
-
-                }
-            }
-
-            repository.addAlreadyGoingUsersFromDb(placeIdListOfUsers);
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    }
-
-    private class SingleLoadEvent implements ValueEventListener {
-
-
-        private HashMap<String, List<User>> placeIdListOfUsers = new HashMap<>();
-
-        SingleLoadEvent() {
-
-        }
-
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            // todo: horrible way to do it since it queries all the database entries
-            // and creates objects for each :D
-
-
-            if (dataSnapshot.exists()) {
-                for (DataSnapshot places : dataSnapshot.getChildren()) {
-
-                    List<User> users = new ArrayList<>();
-
-                    for(DataSnapshot pl : places.getChildren()) {
-                        //Log.w("log here", Objects.requireNonNull(pl.getValue()).toString());
-                        if(Objects.requireNonNull(pl.getValue()).toString().equals(name)) {
-                            //Log.w("adding", name + " to " + places.getKey());
-                            alreadyGoing.add(places.getKey());
-                        }
-                        User u = new User(pl.getValue().toString(), pl.getKey());
-                        users.add(u);
-                        Log.w("added once", u.toString());
-                    }
-                    placeIdListOfUsers.put(places.getKey(), users);
-                    Log.w("added once", users.toString() + " to " + places.getKey());
 
                 }
             }

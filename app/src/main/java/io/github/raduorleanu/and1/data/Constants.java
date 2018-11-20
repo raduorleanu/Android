@@ -1,7 +1,5 @@
 package io.github.raduorleanu.and1.data;
 
-import java.net.URL;
-
 public class Constants {
 
 

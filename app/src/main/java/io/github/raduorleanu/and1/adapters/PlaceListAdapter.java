@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,14 +22,12 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.raduorleanu.and1.AlreadyGoing;
+import io.github.raduorleanu.and1.activities.AlreadyGoing;
 import io.github.raduorleanu.and1.R;
 import io.github.raduorleanu.and1.data.Constants;
 import io.github.raduorleanu.and1.database.AlreadyGoingDb;
-import io.github.raduorleanu.and1.interfaces.ICallbackResponse;
 import io.github.raduorleanu.and1.models.Place;
 import io.github.raduorleanu.and1.models.User;
-import io.github.raduorleanu.and1.util.PlacesDatabaseProvider;
 
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.PlaceViewHolder> {
 
@@ -39,23 +35,19 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
 
     private final LayoutInflater mInflater;
 
-    private List<Place> placeList; // Cached copy of words
+    private List<Place> placeList;
 
     private static List<PlaceViewHolder> cards;
-
-
-    private PlaceListAdapter self;
 
     public PlaceListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
-        self = this;
         cards = new ArrayList<>();
     }
 
     @NonNull
     @Override
-    public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
         return new PlaceViewHolder(itemView);
     }
@@ -65,11 +57,10 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         if (placeList != null) {
             final Place current = placeList.get(index);
             holder.placeName.setText(current.getName());
-            holder.placeId.setText("ID: " + String.valueOf(current.getId()));
+            holder.placeId.setText(String.format("ID: %s", String.valueOf(current.getId())));
 
             new DownloadImageTask(holder.imageView).execute(current.getPictureUrl());
 
-            //holder.alreadyGoingCounterButton.setText(String.valueOf(current.getAlreadyGoing().size()));
 
             holder.alreadyGoingCounterButton.setOnClickListener(new SeeAll(current.getAlreadyGoing()));
 
@@ -84,7 +75,6 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
     }
 
     public static void changeButtonNumber(String placeId, int number) {
-        //cards.get(index).alreadyGoingCounterButton.setText(String.valueOf(number));
         Log.w("ChangeButt", placeId + " to " + number);
         for(PlaceViewHolder cardView: cards) {
             if(cardView.placeId.getText().equals("ID: " + placeId)) {
@@ -100,33 +90,12 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         notifyDataSetChanged();
     }
 
-    // getItemCount() is called many times, and when it is first called,
-    // placeList has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         if (placeList != null)
             return placeList.size();
         else return 0;
     }
-
-//    public void updateSpecificPlace(String placeId, ArrayList<String> userNameList) {
-//        int placeIndex = getPlaceIndex(placeId);
-//        Place place = placeList.get(placeIndex);
-//        for(String s: userNameList) {
-//            place.addUser(new User(s, 1));
-//        }
-//        placeList.set(placeIndex, place);
-//        this.notifyItemChanged(placeIndex);
-//    }
-//
-//    private int getPlaceIndex(String placeId) {
-//        for(int i = 0; i < placeList.size(); i++) {
-//            if(placeList.get(i).getId().equals(placeId)) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
 
     @SuppressLint("Registered")
     class SeeAll extends AppCompatActivity implements View.OnClickListener {
@@ -160,10 +129,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         @Override
         public void onClick(View view) {
             Place place = placeList.get(index);
-
-            //PlacesDatabaseProvider.getPlacesDatabase().addUserToPlace(userName, place.getId());
             AlreadyGoingDb.addUserToPlace(place.getId(), userName);
-            //self.notifyItemChanged(index);
         }
     }
 
